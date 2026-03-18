@@ -1,0 +1,10 @@
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    owner_id INT NOT NULL,
+    title VARCHAR(250) NOT NULL,
+    rating INT NOT NULL,
+    book_image VARCHAR(250) NOT NULL,
+    caption VARCHAR(250) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
+);

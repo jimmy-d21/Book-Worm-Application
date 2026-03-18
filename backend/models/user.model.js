@@ -16,12 +16,12 @@ class UserModel {
 
   static async findByEmail(email) {
     const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
-    return rows[0]; // full user object
+    return rows[0];
   }
 
   static async findByUsername(username) {
     const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [username]);
-    return rows[0]; // full user object
+    return rows[0];
   }
 
   static async findById(id) {
