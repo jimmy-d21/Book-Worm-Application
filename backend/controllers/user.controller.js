@@ -55,3 +55,15 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 };
+
+export const getAuthUser = async (req,res) => {
+    try {
+    const user = req.user;
+    const {password: _, ...safeUser} = user;
+
+    res.status(200).json({user: safeUser});
+    } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Internal server error." });    
+    }
+}
