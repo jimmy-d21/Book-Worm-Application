@@ -8,6 +8,7 @@ const ENV = {
     password: process.env.DB_PASSWORD,
     name: process.env.DB_NAME,
   },
+  jwt: process.env.JWT_SECRET,
 };
 
 export default ENV;
