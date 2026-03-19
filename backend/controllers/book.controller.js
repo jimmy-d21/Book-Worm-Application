@@ -5,7 +5,7 @@ export const createBook = async (req, res) => {
     const { title, rating, caption, image } = req.body;
 
     if (!title || !rating || !caption || !image) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ error: "All fields are required" });
     }
 
     const book = await bookService.createBook(req.user.id, {
@@ -21,7 +21,7 @@ export const createBook = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -35,7 +35,7 @@ export const deleteBook = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(error.status || 500).json({
-      message: error.message || "Server error"
+      error: error.message || "Server error"
     });
   }
 };
@@ -47,7 +47,7 @@ export const getOwnerBooks = async (req, res) => {
     res.status(200).json({ data: books });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -58,6 +58,6 @@ export const getAllBooks = async (req, res) => {
     res.status(200).json({ data: books });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 };

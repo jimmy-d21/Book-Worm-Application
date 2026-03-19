@@ -19,11 +19,11 @@ export const deleteBook = async (bookId, userId) => {
   const book = await BookModel.findById(bookId);
 
   if (!book) {
-    throw { status: 404, message: "Book not found" };
+    throw { status: 404, error: "Book not found" };
   }
 
   if (book.owner_id !== userId) {
-    throw { status: 403, message: "Unauthorized action" };
+    throw { status: 403, error: "Unauthorized action" };
   }
 
   await BookModel.delete(bookId);
