@@ -1,7 +1,11 @@
 import "dotenv/config";
 
 const ENV = {
-  port: process.env.PORT,
+  server: {
+    port: process.env.PORT || 8080,
+    backendUrl: process.env.BACKEND_URL,
+    clientUrl: process.env.FRONTEND_URL,
+  },
   database: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -13,8 +17,7 @@ const ENV = {
     name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     secret_key: process.env.CLOUDINARY_SECRET_KEY,
-  },
-  client_url: process.env.FRONTEND_URL
+  }
 };
 
 export default ENV;
