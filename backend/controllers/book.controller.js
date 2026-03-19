@@ -40,7 +40,29 @@ export const deleteBook = async (req,res) => {
     res.status(201).json({message: "Deleted book successfully"});
 
   } catch (error) {
-    console.error("createBook error:", error);
+    console.error("deleteBook error:", error);
     res.status(500).json({ error: "Internal server error." }); 
   }
 };
+
+export const getAllOwnerBooks = async (req,res) => {
+  try {
+    const user = req.user;
+
+    const books = await BookModel.getAllOwnerBooks(user.id);
+    res.status(200).json(books);
+  } catch (error) {
+    console.error("getAllOwnerBooks error:", error);
+    res.status(500).json({ error: "Internal server error." }); 
+  }
+}
+
+export const getAllBooks = async (req,res) => {
+  try {
+    const books = await BookModel.getAllBooks();
+    res.status(200).json(books);
+  } catch (error) {
+    console.error("getAllBooks error:", error);
+    res.status(500).json({ error: "Internal server error." }); 
+  }
+}
