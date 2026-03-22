@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { dummyUser } from "../assets/assets";
 
 const AuthContext = createContext();
 
