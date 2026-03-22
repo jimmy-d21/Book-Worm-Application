@@ -5,7 +5,7 @@ import bookRoutes from "./routes/book.route.js";
 import ENV from "./utils/ENV.js";
 
 const app = express();
-app.use(cors({origin: ENV.server.clientUrl}));
+app.use(cors({ origin: ENV.server.clientUrl }));
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
