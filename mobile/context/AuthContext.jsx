@@ -59,6 +59,39 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const fetchRegister = async (username, email, password, confirmPassword) => {
+    try {
+      const { data } = await api.post("/api/users/register", {
+        username,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      if (data.error) {
+        return { success: false, message: data.error };
+      }
+
+      const user = data.data.user || data.data?.user;
+      const token = data.data.token || data.data?.token;
+      const message = data.message;
+
+      // Save to storage and state
+      saveToStorage(user, token);
+
+      // Return success with backend message
+      return { success: true, message };
+    } catch (error) {
+      console.log("Register ERROR:", error);
+      const message =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Something went wrong. Please try again.";
+
+      return { success: false, message };
+    }
+  };
+
   const saveToStorage = async (user, token) => {
     if (!token) throw new Error("No token received");
 
@@ -80,7 +113,9 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, fetchLogin, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, loading, fetchLogin, logout, fetchRegister }}
+    >
       {children}
     </AuthContext.Provider>
   );

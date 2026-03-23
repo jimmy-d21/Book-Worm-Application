@@ -3,10 +3,14 @@ import generateToken from "../utils/generateToken.js";
 
 export const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !confirmPassword) {
       return res.status(400).json({ error: "All fields are required" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match. Please try again." });
     }
 
     const user = await userService.register({ username, email, password });

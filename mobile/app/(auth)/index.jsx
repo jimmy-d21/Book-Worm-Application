@@ -67,7 +67,8 @@ export default function Login() {
               alignItems: "center",
               gap: 10,
               borderWidth: 1,
-              padding: 10,
+              paddingVertical: 10,
+              paddingHorizontal: 15,
               borderRadius: 10,
               borderColor: "#BFC6C4",
             }}
@@ -93,7 +94,8 @@ export default function Login() {
               alignItems: "center",
               gap: 10,
               borderWidth: 1,
-              padding: 10,
+              paddingVertical: 10,
+              paddingHorizontal: 15,
               borderRadius: 10,
               borderColor: "#BFC6C4",
             }}
