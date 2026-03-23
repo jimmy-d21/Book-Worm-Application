@@ -17,7 +17,7 @@ function RootLayoutNav() {
     if (!segments.length) return;
 
     const inAuthScreen = segments[0] === "(auth)";
-    const isSignedIn = !!user && !!token;
+    const isSignedIn = user && token;
 
     if (!isSignedIn && !inAuthScreen) {
       router.replace("/(auth)");

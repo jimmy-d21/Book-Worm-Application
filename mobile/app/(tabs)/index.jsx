@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Welcome {user?.email}</Text>
+      <Text>Welcome {user?.username}</Text>
       <TouchableOpacity onPress={logout}>
         <Text style={{ color: "red", marginTop: 20 }}>Logout</Text>
       </TouchableOpacity>

@@ -3,11 +3,11 @@ import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import bookRoutes from "./routes/book.route.js";
+import ENV from "./utils/ENV.js";
 
 const app = express();
 
-// ✅ IMPORTANT for mobile
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: ENV.server.clientUrl }));
 
 app.use(express.json());
 
@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-const PORT = 8080;
+const PORT = ENV.server.port;
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
