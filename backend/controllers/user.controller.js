@@ -6,7 +6,7 @@ export const register = async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ error: "All fields are required" });
     }
 
     const user = await userService.register({ username, email, password });
@@ -31,7 +31,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ error: "All fields are required" });
     }
 
     const user = await userService.login({ email, password });
@@ -56,14 +56,14 @@ export const login = async (req, res) => {
   }
 };
 
-export const getAuthUser = async (req,res) => {
-    try {
+export const getAuthUser = async (req, res) => {
+  try {
     const user = req.user;
-    const {password: _, ...safeUser} = user;
+    const { password: _, ...safeUser } = user;
 
-    res.status(200).json({user: safeUser});
-    } catch (error) {
+    res.status(200).json({ user: safeUser });
+  } catch (error) {
     console.error("Login error:", error);
-    res.status(500).json({ error: "Internal server error." });    
-    }
+    res.status(500).json({ error: "Internal server error." });
+  }
 }

@@ -5,6 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
 import { useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
+import Toast from "react-native-toast-message";
 
 function RootLayoutNav() {
   const { user, token, loading } = useAuthContext();
@@ -27,8 +28,8 @@ function RootLayoutNav() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#6CA651" />
       </View>
     );
   }
@@ -46,7 +47,8 @@ export default function RootLayout() {
       <AuthContextProvider>
         <RootLayoutNav />
       </AuthContextProvider>
-      <StatusBar style="dark" />
+      <Toast />
+      <StatusBar barStyle="dark" />
     </SafeAreaProvider>
   );
 }

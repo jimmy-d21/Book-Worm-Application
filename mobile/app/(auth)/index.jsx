@@ -2,10 +2,37 @@ import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useRouter } from "expo-router";
+import { useAuthContext } from "../../context/AuthContext";
+import Toast from "react-native-toast-message";
 
 export default function Login() {
+  const { fetchLogin } = useAuthContext();
   const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    const result = await fetchLogin(email, password);
+
+    if (result.success) {
+      Toast.show({
+        type: "success",
+        text1: "Welcome 🎉",
+        text2: result.message || "Login successful!",
+      });
+      setEmail("");
+      setPassword("");
+      router.replace("/(tabs)");
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Login Failed",
+        text2: result.message || "Invalid credentials.",
+      });
+    }
+  };
 
   return (
     <View
@@ -17,60 +44,58 @@ export default function Login() {
         backgroundColor: "#DDF6D2",
       }}
     >
-      {/* Image Logo */}
       <Image
         source={require("../../assets/images/book-logo.png")}
         style={{ width: 300, height: 300 }}
       />
+
       <View
         style={{
           padding: 25,
           borderRadius: 15,
           width: "100%",
-          flexDirection: "column",
           backgroundColor: "#fff",
           gap: 15,
         }}
       >
-        {/* Email Inputs */}
-        <View style={{ flexDirection: "column", gap: 10 }}>
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "#393E46" }}>
-            Email
-          </Text>
+        {/* EMAIL */}
+        <View style={{ gap: 10 }}>
+          <Text style={{ fontWeight: "600" }}>Email</Text>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               gap: 10,
-              borderColor: "#BFC6C4",
               borderWidth: 1,
-              paddingVertical: 3,
-              paddingHorizontal: 15,
+              padding: 10,
               borderRadius: 10,
+              borderColor: "#BFC6C4",
             }}
           >
             <Ionicons name="mail-outline" size={24} color="#7FB77E" />
             <TextInput
-              placeholder="Enter you email"
-              style={{ flex: 1, fontSize: 15, fontWeight: "500" }}
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              placeholder="Enter your email"
+              style={{ flex: 1 }}
             />
           </View>
         </View>
-        {/* Password Inputs */}
-        <View style={{ flexDirection: "column", gap: 10 }}>
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "#393E46" }}>
-            Password
-          </Text>
+
+        {/* PASSWORD */}
+        <View style={{ gap: 10 }}>
+          <Text style={{ fontWeight: "600" }}>Password</Text>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               gap: 10,
-              borderColor: "#BFC6C4",
               borderWidth: 1,
-              paddingVertical: 3,
-              paddingHorizontal: 15,
+              padding: 10,
               borderRadius: 10,
+              borderColor: "#BFC6C4",
             }}
           >
             <Ionicons
@@ -79,9 +104,11 @@ export default function Login() {
               color="#7FB77E"
             />
             <TextInput
-              placeholder="******"
+              value={password}
+              onChangeText={setPassword}
               secureTextEntry={!showPassword}
-              style={{ flex: 1, fontSize: 15, fontWeight: "500" }}
+              placeholder="******"
+              style={{ flex: 1 }}
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
               <Ionicons
@@ -94,17 +121,17 @@ export default function Login() {
         </View>
 
         <TouchableOpacity
+          onPress={handleLogin}
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 20,
             backgroundColor: "#6CA651",
-            paddingVertical: 15,
+            padding: 15,
             borderRadius: 15,
+            marginTop: 20,
           }}
         >
-          <Text style={{ fontWeight: "600", color: "#fff", fontSize: 16 }}>
+          <Text
+            style={{ color: "#fff", textAlign: "center", fontWeight: "600" }}
+          >
             Login
           </Text>
         </TouchableOpacity>
@@ -112,17 +139,19 @@ export default function Login() {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center",
             justifyContent: "center",
-            marginTop: 10,
-            gap: 8,
+            alignItems: "center",
+            gap: 5,
+            marginTop: 5,
           }}
         >
-          <Text style={{ color: "#757575", fontWeight: "400" }}>
+          <Text style={{ fontSize: 13, color: "#9ca3af", fontWeight: "500" }}>
             Don't have an account?
           </Text>
           <TouchableOpacity onPress={() => router.push("/(auth)/signup")}>
-            <Text style={{ color: "#43A047", fontWeight: "600" }}>Sign Up</Text>
+            <Text style={{ fontWeight: "800", fontSize: 14, color: "#16a34a" }}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
